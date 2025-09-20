@@ -1,0 +1,93 @@
+# Proyecto CRUD Flutter + PHP + MySQL
+
+Este proyecto es una aplicación simple para gestionar productos y categorías.  
+El **backend** está hecho en PHP + MySQL y el **frontend** en Flutter.  
+
+---
+
+## 📁 Estructura del proyecto
+
+mi_proyecto/
+├─ backend/ ← Código PHP (productos.php, db.php, etc.)
+├─ frontend/ ← Proyecto Flutter
+│ ├─ lib/
+│ │ ├─ main.dart
+│ │ ├─ productos_list.dart
+│ │ └─ producto_form.dart
+│ └─ screenshots/ ← Capturas de pantalla
+├─ README.md
+
+
+---
+
+---______________________________
+
+## 🗄️ Base de datos MySQL
+
+### Crear base de datos
+```sql
+CREATE DATABASE tienda;
+USE tienda;
+
+CREATE TABLE categorias (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    nombre VARCHAR(100) NOT NULL
+);
+
+-- Categorías de ejemplo
+INSERT INTO categorias (nombre) VALUES ('Electrónica'), ('Ropa'), ('Hogar');
+
+CREATE TABLE productos (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    nombre VARCHAR(100) NOT NULL,
+    descripcion TEXT,
+    precio DECIMAL(10,2) NOT NULL,
+    categoria_id INT,
+    FOREIGN KEY (categoria_id) REFERENCES categorias(id)
+);
+
+-- Productos de ejemplo
+INSERT INTO productos (nombre, descripcion, precio, categoria_id) VALUES
+('Celular', 'Teléfono Android', 250.00, 1),
+('Laptop', 'Portátil para oficina', 800.00, 1),
+('Camiseta', 'Algodón talla M', 15.00, 2),
+('Sofá', 'Sofá 3 plazas', 300.00, 3);
+
+________________________________________________
+
+## ⚙️ Backend (PHP + MySQL)
+
+### Endpoints disponibles:
+
+- **GET /productos.php** → Listar todos los productos con su categoría  
+- **POST /productos.php** → Crear producto  
+- **PUT /productos.php** → Editar producto  
+- **DELETE /productos.php?id=X** → Eliminar producto  
+
+> Nota: Asegúrate de configurar la base de datos en `db.php` con tus credenciales MySQL.  
+
+---
+
+## 📌 Frontend (Flutter)
+
+### Funcionalidades:
+
+- Lista de productos en **tarjetas** con nombre, descripción, precio y categoría  
+- Formulario para **crear y editar** productos  
+- Botón para **eliminar** productos  
+- Manejo de errores y mensajes de confirmación  
+- Actualización automática de la lista al crear/editar/eliminar  
+
+### Requisitos para correr Flutter:
+
+- Tener instalado Flutter SDK: [https://flutter.dev/docs/get-started/install](https://flutter.dev/docs/get-started/install)  
+- Navegador Chrome o dispositivo móvil  
+- Conexión a la misma red que tu backend (si usas IP local)  
+
+### Instrucciones:
+
+1. Abrir la carpeta `frontend` en VS Code o Android Studio  
+2. Ejecutar:
+```bash
+flutter pub get
+flutter run -d chrome
